@@ -7,7 +7,10 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="九州しおり">
-<meta name="theme-color" content="#2F6084">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#2F6084">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1F1D19">
+<script>/* 旅行当日は表紙を小さく（描画前に判定） */
+(function(){var d=new Date(),k=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");if(["2026-12-28","2026-12-29","2026-12-30","2026-12-31","2027-01-01","2027-01-02","2027-01-03"].indexOf(k)>=0)document.documentElement.classList.add("trip");})();</script>
 <title>九州旅行 2026.12.28-2027.1.3</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -94,6 +97,17 @@ body::before{ /* iPhoneのノッチ／Dynamic Island下の帯 */
   font-variant-numeric:tabular-nums;
 }
 .cover-cap .count{margin-top:.1rem;font-size:.76rem;color:var(--ink-3);letter-spacing:.04em;}
+.cover-cap .count b{font-family:var(--font-display);font-weight:900;font-size:1.5rem;color:var(--brand);
+  margin:0 .15rem;vertical-align:-.12em;font-variant-numeric:tabular-nums;}
+/* 旅行当日：表紙を細い帯に */
+.trip .cover{display:flex;align-items:center;gap:.7rem;margin:.1rem 0 .3rem;filter:none;}
+.trip .cover-frame{flex:none;width:4.2rem;padding:3px;border-radius:12px;}
+.trip .cover-frame img{aspect-ratio:1;object-fit:cover;border-radius:9px;}
+.trip .cover-cap{padding:0;text-align:left;}
+.trip .cover-cap h1{font-size:1.1rem;}
+.trip .cover-cap .date{font-size:.72rem;margin-top:0;}
+.trip .cover-cap .count{font-size:.72rem;margin-top:0;}
+.trip .cover-cap .count b{font-size:1rem;vertical-align:0;}
 
 /* ───────── タブ（8枚＝4列×2段） ───────── */
 .tabs{
@@ -142,15 +156,17 @@ body::before{ /* iPhoneのノッチ／Dynamic Island下の帯 */
   padding:.28rem .7rem;border-radius:999px;letter-spacing:.02em;
 }
 .tag .ic{font-size:.95rem;}
+.tag.only{padding:0;width:2rem;height:2rem;justify-content:center;}
+.tag.only .ic{font-size:1.1rem;}
 .card-title{font-family:var(--font-display);font-weight:700;font-size:1.02rem;line-height:1.3;}
 
-.day1{--c:hsl(var(--h-d1),44%,42%);--c-bg:hsl(var(--h-d1),40%,94%);}
-.day2{--c:hsl(var(--h-d2),52%,42%);--c-bg:hsl(var(--h-d2),52%,94%);}
-.day3{--c:hsl(var(--h-d3),46%,34%);--c-bg:hsl(var(--h-d3),42%,94%);}
-.day4{--c:hsl(var(--h-d4),46%,30%);--c-bg:hsl(var(--h-d4),40%,93%);}
-.day5{--c:hsl(var(--h-d5),48%,42%);--c-bg:hsl(var(--h-d5),50%,95%);}
-.day6{--c:hsl(var(--h-d6),56%,38%);--c-bg:hsl(var(--h-d6),52%,94%);}
-.day7{--c:hsl(var(--h-d7),40%,44%);--c-bg:hsl(var(--h-d7),40%,95%);}
+.day1{--c:hsl(var(--h-d1),44%,42%);--c-bg:hsl(var(--h-d1),40%,94%);--c-tint:hsl(var(--h-d1),40%,97%);}
+.day2{--c:hsl(var(--h-d2),52%,42%);--c-bg:hsl(var(--h-d2),52%,94%);--c-tint:hsl(var(--h-d2),52%,97%);}
+.day3{--c:hsl(var(--h-d3),46%,34%);--c-bg:hsl(var(--h-d3),42%,94%);--c-tint:hsl(var(--h-d3),42%,97%);}
+.day4{--c:hsl(var(--h-d4),46%,30%);--c-bg:hsl(var(--h-d4),40%,93%);--c-tint:hsl(var(--h-d4),40%,96%);}
+.day5{--c:hsl(var(--h-d5),48%,42%);--c-bg:hsl(var(--h-d5),50%,95%);--c-tint:hsl(var(--h-d5),50%,98%);}
+.day6{--c:hsl(var(--h-d6),56%,38%);--c-bg:hsl(var(--h-d6),52%,94%);--c-tint:hsl(var(--h-d6),52%,97%);}
+.day7{--c:hsl(var(--h-d7),40%,44%);--c-bg:hsl(var(--h-d7),40%,95%);--c-tint:hsl(var(--h-d7),40%,98%);}
 .pack{--c:hsl(var(--h-pack),52%,36%);--c-bg:hsl(var(--h-pack),50%,93%);}
 
 /* ───────── 山データ（登山日のカード上部） ───────── */
@@ -204,9 +220,31 @@ body::before{ /* iPhoneのノッチ／Dynamic Island下の帯 */
 }
 .hl{font-weight:700;color:var(--c);background:var(--c-bg);padding:.05rem .3rem;border-radius:5px;}
 .warn{font-weight:700;color:var(--alert);}
+a.map{color:inherit;text-decoration:underline dotted var(--c);text-decoration-thickness:2px;
+  text-underline-offset:4px;-webkit-tap-highlight-color:transparent;}
+a.map:active{background:var(--c-bg);}
 .tl.stay{background:hsla(var(--h-base),30%,50%,.05);}
-.tl.hike{background:hsla(var(--h-base),30%,50%,.05);}
-.tl.now{background:hsla(var(--h-d2),70%,50%,.10);}
+.tl.hike{background:var(--c-tint);}
+.tl.hike::before{ /* 登山区間は背骨を日の色で太く */
+  content:"";position:absolute;top:0;bottom:0;
+  left:calc(var(--row-pad) + var(--col-time) + var(--col-gap) + var(--col-ico)/2 - 2px);
+  width:4px;background:var(--c);opacity:.55;
+}
+.tl.hike .t-ico{background:var(--c-tint);position:relative;z-index:1;}
+.tl.now{background:var(--c-bg);box-shadow:inset 4px 0 0 var(--c);}
+.tl.past,.sun.past{opacity:.4;}
+.sun{
+  position:relative;display:grid;grid-template-columns:var(--col-time) var(--col-ico) 1fr;
+  column-gap:var(--col-gap);align-items:center;
+  padding:.15rem var(--row-pad);border-bottom:1px dashed var(--line-soft);
+  font-size:.72rem;line-height:22px;color:var(--ink-3);letter-spacing:.04em;
+}
+.sun .s-t{text-align:right;font-variant-numeric:tabular-nums;font-weight:700;}
+.sun .s-d{justify-self:center;width:.55rem;height:.55rem;border-radius:50%;
+  background:var(--panel);border:2px solid var(--ink-3);position:relative;z-index:1;}
+.sun.set .s-d{background:var(--ink-3);}
+.sun.in-hike{background:var(--c-tint);}
+.sun.in-hike::before{content:"";position:absolute;top:0;bottom:0;left:calc(var(--row-pad) + var(--col-time) + var(--col-gap) + var(--col-ico)/2 - 2px);width:4px;background:var(--c);opacity:.55;}
 .tl.now::after{
   content:"今ここ";position:absolute;right:.6rem;top:.35rem;
   font-size:.62rem;font-weight:700;color:#fff;background:var(--c);
@@ -245,8 +283,17 @@ body::before{ /* iPhoneのノッチ／Dynamic Island下の帯 */
 .item .txt small{display:block;font-size:.76rem;font-weight:400;color:var(--ink-3);line-height:1.55;margin-top:.05rem;}
 .item.checked .txt{text-decoration:line-through;color:var(--ink-3);}
 .item.checked .txt small{color:var(--ink-3);}
+.fold{
+  margin-left:auto;font-family:var(--font-body);font-size:.7rem;font-weight:700;color:var(--ink-2);
+  background:none;border:1px solid var(--line);border-radius:999px;padding:.12rem .65rem;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.fold[aria-pressed="true"]{color:var(--c);border-color:var(--c);}
+.hide-done .item.checked:not(.just),.hide-done .cat.done{display:none;}
+.all-done{display:none;padding:1.1rem .75rem;text-align:center;font-size:.86rem;font-weight:700;color:var(--c);}
+.hide-done.complete .all-done{display:block;}
 .counter{
-  margin-left:auto;font-size:.74rem;font-weight:700;color:var(--c);
+  margin-left:0;font-size:.74rem;font-weight:700;color:var(--c);
   background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:.1rem .6rem;
   font-variant-numeric:tabular-nums;
 }
@@ -280,15 +327,16 @@ body::before{ /* iPhoneのノッチ／Dynamic Island下の帯 */
     --alert:     hsl(14, 70%, 64%);
   }
   body{background-image:radial-gradient(hsla(var(--h-base),20%,70%,.07) 1.1px, transparent 1.1px);}
-  .day1{--c:hsl(var(--h-d1),52%,68%);--c-bg:hsl(var(--h-d1),24%,20%);}
-  .day2{--c:hsl(var(--h-d2),58%,64%);--c-bg:hsl(var(--h-d2),28%,19%);}
-  .day3{--c:hsl(var(--h-d3),52%,62%);--c-bg:hsl(var(--h-d3),26%,18%);}
-  .day4{--c:hsl(var(--h-d4),48%,58%);--c-bg:hsl(var(--h-d4),26%,17%);}
-  .day5{--c:hsl(var(--h-d5),56%,66%);--c-bg:hsl(var(--h-d5),26%,20%);}
-  .day6{--c:hsl(var(--h-d6),58%,62%);--c-bg:hsl(var(--h-d6),28%,19%);}
-  .day7{--c:hsl(var(--h-d7),46%,68%);--c-bg:hsl(var(--h-d7),24%,20%);}
+  .day1{--c:hsl(var(--h-d1),52%,68%);--c-bg:hsl(var(--h-d1),24%,20%);--c-tint:hsl(var(--h-d1),24%,18%);}
+  .day2{--c:hsl(var(--h-d2),58%,64%);--c-bg:hsl(var(--h-d2),28%,19%);--c-tint:hsl(var(--h-d2),28%,17%);}
+  .day3{--c:hsl(var(--h-d3),52%,62%);--c-bg:hsl(var(--h-d3),26%,18%);--c-tint:hsl(var(--h-d3),26%,16%);}
+  .day4{--c:hsl(var(--h-d4),48%,58%);--c-bg:hsl(var(--h-d4),26%,17%);--c-tint:hsl(var(--h-d4),26%,15%);}
+  .day5{--c:hsl(var(--h-d5),56%,66%);--c-bg:hsl(var(--h-d5),26%,20%);--c-tint:hsl(var(--h-d5),26%,18%);}
+  .day6{--c:hsl(var(--h-d6),58%,62%);--c-bg:hsl(var(--h-d6),28%,19%);--c-tint:hsl(var(--h-d6),28%,17%);}
+  .day7{--c:hsl(var(--h-d7),46%,68%);--c-bg:hsl(var(--h-d7),24%,20%);--c-tint:hsl(var(--h-d7),24%,18%);}
   .pack{--c:hsl(var(--h-pack),55%,60%);--c-bg:hsl(var(--h-pack),26%,18%);}
   .tab-btn.active{color:hsl(var(--h-base),15%,10%);}
+  .cover-frame img{filter:brightness(.86) saturate(.95);}
   .tl.now::after,.tag{color:hsl(var(--h-base),15%,10%);}
 }
 </style>
@@ -359,7 +407,9 @@ body::before{ /* iPhoneのノッチ／Dynamic Island下の帯 */
 
     <div class="card pack">
       <div class="card-head">
-        <span class="tag"><svg class="ic"><use href="#i-bag"/></svg>持ち物</span>
+        <span class="tag only" aria-hidden="true"><svg class="ic"><use href="#i-bag"/></svg></span>
+        <div class="card-title">持ち物</div>
+        <button class="fold" type="button" aria-pressed="false">済みを隠す</button>
         <span class="counter"></span>
       </div>
 
@@ -389,6 +439,7 @@ body::before{ /* iPhoneのノッチ／Dynamic Island下の帯 */
       <div class="item"><span class="box"></span><span class="txt">シャンプー・保湿・洗剤</span></div>
       <div class="item"><span class="box"></span><span class="txt">ティッシュ・ウェット</span></div>
       <div class="item"><span class="box"></span><span class="txt">体温計・坐薬・ロコイド</span></div>
+      <div class="all-done">すべて準備完了</div>
 
     </div>
 
@@ -398,7 +449,7 @@ body::before{ /* iPhoneのノッチ／Dynamic Island下の帯 */
   <div class="tab-panel" id="day1">
     <div class="card day1" data-date="2026-12-28">
       <div class="card-head">
-        <span class="tag"><svg class="ic"><use href="#i-plane"/></svg>12/28（月）</span>
+        <span class="tag only" aria-label="12/28（月）"><svg class="ic"><use href="#i-plane"/></svg></span>
         <div class="card-title">新潟 → 福岡・博多の夜</div>
       </div>
       <div class="trail">
@@ -406,7 +457,7 @@ body::before{ /* iPhoneのノッチ／Dynamic Island下の帯 */
         <div class="tl" data-t="19:30"><div class="t-start">19:30</div><div class="t-dur">2:00</div><div class="t-ico"><svg class="ic"><use href="#i-plane"/></svg></div><div class="t-sum">FW088便→福岡</div><div class="t-det">新潟空港発。機内で明日の桜島の動きを確認</div></div>
         <div class="tl" data-t="21:30"><div class="t-start">21:30</div><div class="t-dur">0:20</div><div class="t-ico"><svg class="ic"><use href="#i-airport"/></svg></div><div class="t-sum">福岡空港 到着・手荷物受取</div><div class="t-det">国内線ターミナルから地下鉄駅は直結</div></div>
         <div class="tl" data-t="21:50"><div class="t-start">21:50</div><div class="t-dur">0:05</div><div class="t-ico"><svg class="ic"><use href="#i-train"/></svg></div><div class="t-sum">地下鉄→博多</div><div class="t-det">空港線。<span class="hl">わずか2駅・5分</span>で筑紫口へ出る</div></div>
-        <div class="tl stay" data-t="22:00"><div class="t-start">22:00</div><div class="t-dur">0:30</div><div class="t-ico"><svg class="ic"><use href="#i-lodge"/></svg></div><div class="t-sum">博多 チェックイン</div><div class="t-det">スーパーホテルPremier博多駅・筑紫口。明日は8時発なので荷物は開けすぎない</div></div>
+        <div class="tl stay" data-t="22:00"><div class="t-start">22:00</div><div class="t-dur">0:30</div><div class="t-ico"><svg class="ic"><use href="#i-lodge"/></svg></div><div class="t-sum"><a class="map" href="https://www.google.com/maps/search/?api=1&query=%E3%82%B9%E3%83%BC%E3%83%91%E3%83%BC%E3%83%9B%E3%83%86%E3%83%ABPremier%E5%8D%9A%E5%A4%9A%E9%A7%85%E3%83%BB%E7%AD%91%E7%B4%AB%E5%8F%A3" target="_blank" rel="noopener">博多</a> チェックイン</div><div class="t-det">スーパーホテルPremier博多駅・筑紫口。明日は8時発なので荷物は開けすぎない</div></div>
         <div class="tl" data-t="22:30"><div class="t-start">22:30</div><div class="t-dur">0:40</div><div class="t-ico"><svg class="ic"><use href="#i-bath"/></svg></div><div class="t-sum">天然温泉の大浴場</div><div class="t-det">夜通し入れる。移動の疲れを抜く</div></div>
         <div class="tl stay" data-t="23:00"><div class="t-start">23:00</div><div class="t-dur">7:30</div><div class="t-ico"><svg class="ic"><use href="#i-moon"/></svg></div><div class="t-sum">就寝</div><div class="t-det">翌朝6:30起床。朝食はバイキングを軽く</div></div>
       </div>
@@ -425,25 +476,27 @@ body::before{ /* iPhoneのノッチ／Dynamic Island下の帯 */
   <div class="tab-panel" id="day2">
     <div class="card day2" data-date="2026-12-29">
       <div class="card-head">
-        <span class="tag"><svg class="ic"><use href="#i-ship"/></svg>12/29（火）</span>
+        <span class="tag only" aria-label="12/29（火）"><svg class="ic"><use href="#i-ship"/></svg></span>
         <div class="card-title">九州新幹線で鹿児島 → 桜島 → 指宿</div>
       </div>
       <div class="trail">
         <div class="tl" data-t="06:30"><div class="t-start">6:30</div><div class="t-dur">1:30</div><div class="t-ico"><svg class="ic"><use href="#i-sun"/></svg></div><div class="t-sum">起床・朝食・チェックアウト</div><div class="t-det">7:40には博多駅の新幹線ホームへ</div></div>
+        <div class="sun" data-t="07:15"><div class="s-t">7:15</div><div class="s-d"></div><div>日の出</div></div>
         <div class="tl" data-t="08:00"><div class="t-start">8:00</div><div class="t-dur">1:30</div><div class="t-ico"><svg class="ic"><use href="#i-bullet"/></svg></div><div class="t-sum">新幹線→鹿児島中央</div><div class="t-det">九州新幹線 みずほ／さくら・<span class="hl">指定席を予約（11/29発売）</span>。熊本を過ぎると車窓は山がちに</div></div>
         <div class="tl" data-t="09:30"><div class="t-start">9:30</div><div class="t-dur">0:20</div><div class="t-ico"><svg class="ic"><use href="#i-bag"/></svg></div><div class="t-sum">鹿児島中央 荷物を預ける</div><div class="t-det"><span class="hl">身軽になる</span>。夕方まで大きな荷物を預ける</div></div>
         <div class="tl" data-t="09:50"><div class="t-start">9:50</div><div class="t-dur">0:25</div><div class="t-ico"><svg class="ic"><use href="#i-train"/></svg></div><div class="t-sum">市電→水族館口</div><div class="t-det">下車後、桜島フェリーターミナルへ徒歩</div></div>
         <div class="tl" data-t="10:15"><div class="t-start">10:15</div><div class="t-dur">0:15</div><div class="t-ico"><svg class="ic"><use href="#i-ship"/></svg></div><div class="t-sum">桜島フェリー→桜島</div><div class="t-det">予約不要・24時間運航。デッキから桜島を正面に見る15分</div></div>
-        <div class="tl" data-t="10:40"><div class="t-start">10:40</div><div class="t-dur">0:50</div><div class="t-ico"><svg class="ic"><use href="#i-bath"/></svg></div><div class="t-sum">溶岩なぎさ公園 足湯</div><div class="t-det">全長100mの天然足湯。錦江湾ごしに鹿児島市街を眺める</div></div>
-        <div class="tl" data-t="11:30"><div class="t-start">11:30</div><div class="t-dur">0:40</div><div class="t-ico"><svg class="ic"><use href="#i-eye"/></svg></div><div class="t-sum">桜島ビジターセンター</div><div class="t-det">噴火の歴史と地形の展示。売店に限定トート・手ぬぐい</div></div>
+        <div class="tl" data-t="10:40"><div class="t-start">10:40</div><div class="t-dur">0:50</div><div class="t-ico"><svg class="ic"><use href="#i-bath"/></svg></div><div class="t-sum"><a class="map" href="https://www.google.com/maps/search/?api=1&query=%E6%BA%B6%E5%B2%A9%E3%81%AA%E3%81%8E%E3%81%95%E5%85%AC%E5%9C%92%20%E8%B6%B3%E6%B9%AF" target="_blank" rel="noopener">溶岩なぎさ公園</a> 足湯</div><div class="t-det">全長100mの天然足湯。錦江湾ごしに鹿児島市街を眺める</div></div>
+        <div class="tl" data-t="11:30"><div class="t-start">11:30</div><div class="t-dur">0:40</div><div class="t-ico"><svg class="ic"><use href="#i-eye"/></svg></div><div class="t-sum"><a class="map" href="https://www.google.com/maps/search/?api=1&query=%E6%A1%9C%E5%B3%B6%E3%83%93%E3%82%B8%E3%82%BF%E3%83%BC%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC" target="_blank" rel="noopener">桜島ビジターセンター</a></div><div class="t-det">噴火の歴史と地形の展示。売店に限定トート・手ぬぐい</div></div>
         <div class="tl" data-t="12:10"><div class="t-start">12:10</div><div class="t-dur">0:50</div><div class="t-ico"><svg class="ic"><use href="#i-fork"/></svg></div><div class="t-sum">桜島で昼食</div><div class="t-det">桜島小みかんを使ったうどん、火山をかたどった名物メニューなど</div></div>
         <div class="tl" data-t="13:00"><div class="t-start">13:00</div><div class="t-dur">0:15</div><div class="t-ico"><svg class="ic"><use href="#i-ship"/></svg></div><div class="t-sum">桜島フェリー→鹿児島</div></div>
         <div class="tl" data-t="13:20"><div class="t-start">13:20</div><div class="t-dur">0:30</div><div class="t-ico"><svg class="ic"><use href="#i-train"/></svg></div><div class="t-sum">市電→鹿児島中央</div></div>
-        <div class="tl" data-t="13:50"><div class="t-start">13:50</div><div class="t-dur">1:40</div><div class="t-ico"><svg class="ic"><use href="#i-shop"/></svg></div><div class="t-sum">アミュプラザ鹿児島</div><div class="t-det">ゲームセンター、観覧車アミュラン、駅ナカスイーツ</div></div>
+        <div class="tl" data-t="13:50"><div class="t-start">13:50</div><div class="t-dur">1:40</div><div class="t-ico"><svg class="ic"><use href="#i-shop"/></svg></div><div class="t-sum"><a class="map" href="https://www.google.com/maps/search/?api=1&query=%E3%82%A2%E3%83%9F%E3%83%A5%E3%83%97%E3%83%A9%E3%82%B6%E9%B9%BF%E5%85%90%E5%B3%B6" target="_blank" rel="noopener">アミュプラザ鹿児島</a></div><div class="t-det">ゲームセンター、観覧車アミュラン、駅ナカスイーツ</div></div>
         <div class="tl" data-t="15:30"><div class="t-start">15:30</div><div class="t-dur">1:15</div><div class="t-ico"><svg class="ic"><use href="#i-gift"/></svg></div><div class="t-sum">お土産の下見・荷物受取</div><div class="t-det">鹿児島限定だけ目星を。帰りは博多で買う</div></div>
         <div class="tl" data-t="16:45"><div class="t-start">16:45</div><div class="t-dur">1:15</div><div class="t-ico"><svg class="ic"><use href="#i-train"/></svg></div><div class="t-sum">指宿枕崎線→指宿</div><div class="t-det">普通。錦江湾ぞいを南下。日没17:15ごろ、海に沈む夕日</div></div>
+        <div class="sun set" data-t="17:23"><div class="s-t">17:23</div><div class="s-d"></div><div>日の入</div></div>
         <div class="tl" data-t="18:00"><div class="t-start">18:00</div><div class="t-dur">0:20</div><div class="t-ico"><svg class="ic"><use href="#i-bus"/></svg></div><div class="t-sum">送迎バス→白水館</div><div class="t-det"><span class="hl">到着列車を事前に連絡</span></div></div>
-        <div class="tl stay" data-t="18:20"><div class="t-start">18:20</div><div class="t-dur">0:40</div><div class="t-ico"><svg class="ic"><use href="#i-lodge"/></svg></div><div class="t-sum">指宿白水館 チェックイン</div><div class="t-det"><span class="hl">明朝の指宿駅行き送迎バスを予約</span></div></div>
+        <div class="tl stay" data-t="18:20"><div class="t-start">18:20</div><div class="t-dur">0:40</div><div class="t-ico"><svg class="ic"><use href="#i-lodge"/></svg></div><div class="t-sum"><a class="map" href="https://www.google.com/maps/search/?api=1&query=%E6%8C%87%E5%AE%BF%E7%99%BD%E6%B0%B4%E9%A4%A8" target="_blank" rel="noopener">指宿白水館</a> チェックイン</div><div class="t-det"><span class="hl">明朝の指宿駅行き送迎バスを予約</span></div></div>
         <div class="tl" data-t="19:00"><div class="t-start">19:00</div><div class="t-dur">1:00</div><div class="t-ico"><svg class="ic"><use href="#i-fork"/></svg></div><div class="t-sum">夕食</div><div class="t-det">薩摩の郷土料理。明日は開聞岳、食べすぎない</div></div>
         <div class="tl" data-t="20:00"><div class="t-start">20:00</div><div class="t-dur">1:10</div><div class="t-ico"><svg class="ic"><use href="#i-bath"/></svg></div><div class="t-sum">天然砂むし温泉・元禄風呂</div><div class="t-det"><span class="hl">この旅の目玉のひとつ</span>。砂むしは大浴場カウンターで当日受付順</div></div>
         <div class="tl" data-t="21:10"><div class="t-start">21:10</div><div class="t-dur">0:50</div><div class="t-ico"><svg class="ic"><use href="#i-gear"/></svg></div><div class="t-sum">コインランドリー・登山準備</div><div class="t-det">明日の行動食と水を用意。<span class="hl">開聞岳の天気を確認</span></div></div>
@@ -464,32 +517,42 @@ body::before{ /* iPhoneのノッチ／Dynamic Island下の帯 */
   <div class="tab-panel" id="day3">
     <div class="card day3" data-date="2026-12-30">
       <div class="card-head">
-        <span class="tag"><svg class="ic"><use href="#i-mtn"/></svg>12/30（水）</span>
+        <span class="tag only" aria-label="12/30（水）"><svg class="ic"><use href="#i-mtn"/></svg></span>
         <div class="card-title">開聞岳 登山 → 天文館</div>
       </div>
       <div class="mt">
         <div class="stats stats-3">
-          <div class="s"><div class="n">924<span class="u">m</span></div><div class="l">標高<br>百名山18座目</div></div>
-          <div class="s"><div class="n">5:50</div><div class="l">コースタイム<br>休憩30分</div></div>
-          <div class="s"><div class="n">800<span class="u">m</span></div><div class="l">標高差（約）<br>2合目から</div></div>
+          <div class="s"><div class="n">924<span class="u">m</span></div><div class="l">百名山18座目</div></div>
+          <div class="s"><div class="n">5:35</div><div class="l">休憩15分</div></div>
+          <div class="s"><div class="n">20</div><div class="l">ふつう</div></div>
         </div>
       </div>
       <div class="trail">
         <div class="tl" data-t="06:00"><div class="t-start">6:00</div><div class="t-dur">1:00</div><div class="t-ico"><svg class="ic"><use href="#i-sun"/></svg></div><div class="t-sum">起床・朝食</div><div class="t-det">行動食は前夜に用意済み</div></div>
         <div class="tl" data-t="07:00"><div class="t-start">7:00</div><div class="t-dur">0:30</div><div class="t-ico"><svg class="ic"><use href="#i-bus"/></svg></div><div class="t-sum">送迎バス→指宿駅</div><div class="t-det">チェックアウトして駅へ</div></div>
+        <div class="sun" data-t="07:15"><div class="s-t">7:15</div><div class="s-d"></div><div>日の出</div></div>
         <div class="tl" data-t="07:30"><div class="t-start">7:30</div><div class="t-dur">0:10</div><div class="t-ico"><svg class="ic"><use href="#i-bag"/></svg></div><div class="t-sum">指宿駅 荷物を預ける</div><div class="t-det">コインロッカーは<span class="warn">数が少ない</span>。満杯なら白水館に夕方まで預かってもらう相談を</div></div>
         <div class="tl" data-t="07:40"><div class="t-start">7:40</div><div class="t-dur">0:35</div><div class="t-ico"><svg class="ic"><use href="#i-train"/></svg></div><div class="t-sum">指宿枕崎線→開聞</div><div class="t-det">普通。無人駅。降りた瞬間に開聞岳が正面に立っている</div></div>
-        <div class="tl" data-t="08:20"><div class="t-start">8:20</div><div class="t-dur">0:40</div><div class="t-ico"><svg class="ic"><use href="#i-walk"/></svg></div><div class="t-sum">徒歩→2合目登山口</div><div class="t-det">かいもん山麓ふれあい公園まで約2.5km。<span class="hl">見落としやすい40分</span></div></div>
-        <div class="tl hike" data-t="09:00"><div class="t-start">9:00</div><div class="t-dur">3:00</div><div class="t-ico"><svg class="ic"><use href="#i-up"/></svg></div><div class="t-sum">2合目登山口（登山開始）</div><div class="t-det"><span class="hl">登山届を提出</span>。樹林帯をらせん状に。7合目から先は岩とロープ</div></div>
-        <div class="tl hike" data-t="12:00"><div class="t-start">12:00</div><div class="t-dur">0:30</div><div class="t-ico"><svg class="ic"><use href="#i-summit"/></svg></div><div class="t-sum">開聞岳 山頂（924m）</div><div class="t-det">東シナ海と長崎鼻、晴れれば屋久島まで</div></div>
-        <div class="tl hike" data-t="12:30"><div class="t-start">12:30</div><div class="t-dur">2:20</div><div class="t-ico"><svg class="ic"><use href="#i-down"/></svg></div><div class="t-sum">下山開始</div><div class="t-det">火山礫でよく滑る。同じ景色が続くので現在地を意識する</div></div>
-        <div class="tl" data-t="14:50"><div class="t-start">14:50</div><div class="t-dur">0:20</div><div class="t-ico"><svg class="ic"><use href="#i-clock"/></svg></div><div class="t-sum">ふれあい公園で休憩</div><div class="t-det">山バッジを探し、靴の砂を落とす</div></div>
+        <div class="tl" data-t="08:20"><div class="t-start">8:20</div><div class="t-dur">0:40</div><div class="t-ico"><svg class="ic"><use href="#i-walk"/></svg></div><div class="t-sum">徒歩→ふれあい公園</div><div class="t-det">約2.5km・ゆるい登り。<span class="hl">見落としやすい40分</span></div></div>
+        <div class="tl hike" data-t="09:00"><div class="t-start">9:00</div><div class="t-dur">0:10</div><div class="t-ico"><svg class="ic"><use href="#i-up"/></svg></div><div class="t-sum"><a class="map" href="https://www.google.com/maps/search/?api=1&query=%E3%81%8B%E3%81%84%E3%82%82%E3%82%93%E5%B1%B1%E9%BA%93%E3%81%B5%E3%82%8C%E3%81%82%E3%81%84%E5%85%AC%E5%9C%92" target="_blank" rel="noopener">ふれあい公園</a>（登山開始）</div><div class="t-det">かいもん山麓ふれあい公園。<span class="hl">登山届を提出</span>。トイレはここで</div></div>
+        <div class="tl hike" data-t="09:10"><div class="t-start">9:10</div><div class="t-dur">0:40</div><div class="t-ico"><svg class="ic"><use href="#i-up"/></svg></div><div class="t-sum">開聞岳北登山口</div><div class="t-det">樹林帯をらせん状に登る</div></div>
+        <div class="tl hike" data-t="09:50"><div class="t-start">9:50</div><div class="t-dur">0:20</div><div class="t-ico"><svg class="ic"><use href="#i-up"/></svg></div><div class="t-sum">4合目</div></div>
+        <div class="tl hike" data-t="10:10"><div class="t-start">10:10</div><div class="t-dur">0:55</div><div class="t-ico"><svg class="ic"><use href="#i-up"/></svg></div><div class="t-sum">5合目展望台</div></div>
+        <div class="tl hike" data-t="11:05"><div class="t-start">11:05</div><div class="t-dur">0:50</div><div class="t-ico"><svg class="ic"><use href="#i-up"/></svg></div><div class="t-sum">仙人洞</div><div class="t-det">ここから先は岩場とロープ</div></div>
+        <div class="tl hike" data-t="11:55"><div class="t-start">11:55</div><div class="t-dur">0:15</div><div class="t-ico"><svg class="ic"><use href="#i-summit"/></svg></div><div class="t-sum"><a class="map" href="https://www.google.com/maps/search/?api=1&query=%E9%96%8B%E8%81%9E%E5%B2%B3" target="_blank" rel="noopener">開聞岳 山頂</a>（924m）</div><div class="t-det">日本百名山 通算18座目。15分休憩・昼食。東シナ海と長崎鼻、晴れれば屋久島まで</div></div>
+        <div class="tl hike" data-t="12:10"><div class="t-start">12:10</div><div class="t-dur">0:45</div><div class="t-ico"><svg class="ic"><use href="#i-down"/></svg></div><div class="t-sum">下山開始</div><div class="t-det"><span class="warn">火山礫でよく滑る</span>。同じ景色が続くので現在地を意識する</div></div>
+        <div class="tl hike" data-t="12:55"><div class="t-start">12:55</div><div class="t-dur">0:45</div><div class="t-ico"><svg class="ic"><use href="#i-down"/></svg></div><div class="t-sum">仙人洞</div></div>
+        <div class="tl hike" data-t="13:40"><div class="t-start">13:40</div><div class="t-dur">0:15</div><div class="t-ico"><svg class="ic"><use href="#i-down"/></svg></div><div class="t-sum">5合目展望台</div></div>
+        <div class="tl hike" data-t="13:55"><div class="t-start">13:55</div><div class="t-dur">0:30</div><div class="t-ico"><svg class="ic"><use href="#i-down"/></svg></div><div class="t-sum">4合目</div></div>
+        <div class="tl hike" data-t="14:25"><div class="t-start">14:25</div><div class="t-dur">0:10</div><div class="t-ico"><svg class="ic"><use href="#i-down"/></svg></div><div class="t-sum">開聞岳北登山口</div></div>
+        <div class="tl hike" data-t="14:35"><div class="t-start">14:35</div><div class="t-dur">0:35</div><div class="t-ico"><svg class="ic"><use href="#i-down"/></svg></div><div class="t-sum">ふれあい公園（下山完了）</div><div class="t-det">山バッジを探し、靴の砂を落とす</div></div>
         <div class="tl" data-t="15:10"><div class="t-start">15:10</div><div class="t-dur">0:40</div><div class="t-ico"><svg class="ic"><use href="#i-walk"/></svg></div><div class="t-sum">徒歩→開聞駅</div><div class="t-det">下り基調。日没17:15なので明るいうちに戻れる</div></div>
         <div class="tl" data-t="15:55"><div class="t-start">15:55</div><div class="t-dur">0:35</div><div class="t-ico"><svg class="ic"><use href="#i-train"/></svg></div><div class="t-sum">指宿枕崎線→指宿</div><div class="t-det"><span class="warn">本数が少ない</span>。<span class="hl">戻る便を時刻表で確認</span></div></div>
         <div class="tl" data-t="16:30"><div class="t-start">16:30</div><div class="t-dur">0:15</div><div class="t-ico"><svg class="ic"><use href="#i-bag"/></svg></div><div class="t-sum">指宿駅 荷物を受け取る</div></div>
         <div class="tl" data-t="16:45"><div class="t-start">16:45</div><div class="t-dur">1:15</div><div class="t-ico"><svg class="ic"><use href="#i-train"/></svg></div><div class="t-sum">指宿枕崎線→鹿児島中央</div><div class="t-det">指宿枕崎線。車内で足を伸ばして休む</div></div>
+        <div class="sun set" data-t="17:24"><div class="s-t">17:24</div><div class="s-d"></div><div>日の入</div></div>
         <div class="tl" data-t="18:05"><div class="t-start">18:05</div><div class="t-dur">0:25</div><div class="t-ico"><svg class="ic"><use href="#i-train"/></svg></div><div class="t-sum">市電→天文館通</div></div>
-        <div class="tl stay" data-t="18:30"><div class="t-start">18:30</div><div class="t-dur">0:30</div><div class="t-ico"><svg class="ic"><use href="#i-lodge"/></svg></div><div class="t-sum">天文館 チェックイン</div><div class="t-det">変なホテルプレミア鹿児島 天文館。登山装備を片付け、着替えてから夕食へ</div></div>
+        <div class="tl stay" data-t="18:30"><div class="t-start">18:30</div><div class="t-dur">0:30</div><div class="t-ico"><svg class="ic"><use href="#i-lodge"/></svg></div><div class="t-sum"><a class="map" href="https://www.google.com/maps/search/?api=1&query=%E5%A4%89%E3%81%AA%E3%83%9B%E3%83%86%E3%83%AB%E3%83%97%E3%83%AC%E3%83%9F%E3%82%A2%E9%B9%BF%E5%85%90%E5%B3%B6%E5%A4%A9%E6%96%87%E9%A4%A8" target="_blank" rel="noopener">天文館</a> チェックイン</div><div class="t-det">変なホテルプレミア鹿児島 天文館。登山装備を片付け、着替えてから夕食へ</div></div>
         <div class="tl" data-t="19:00"><div class="t-start">19:00</div><div class="t-dur">1:30</div><div class="t-ico"><svg class="ic"><use href="#i-fork"/></svg></div><div class="t-sum">天文館で夕食</div><div class="t-det">黒豚しゃぶしゃぶ、黒豚とんかつ。<span class="hl">店を予約</span></div></div>
         <div class="tl" data-t="20:30"><div class="t-start">20:30</div><div class="t-dur">0:45</div><div class="t-ico"><svg class="ic"><use href="#i-shop"/></svg></div><div class="t-sum">天文館アーケード散策</div><div class="t-det">しろくま（白熊）は冬でも名物</div></div>
         <div class="tl" data-t="21:15"><div class="t-start">21:15</div><div class="t-dur">0:45</div><div class="t-ico"><svg class="ic"><use href="#i-bath"/></svg></div><div class="t-sum">展望大浴場・コインランドリー</div><div class="t-det">最上階の展望大浴場とサウナ。<span class="hl">えびの高原行きバスの運行を確認</span></div></div>
@@ -498,9 +561,9 @@ body::before{ /* iPhoneのノッチ／Dynamic Island下の帯 */
       <div class="note">
         <div class="note-h">この日のポイント</div>
         <ul>
-          <li>開聞駅〜登山口の徒歩40分は往復1時間20分。見込んでおく。</li>
+          <li>コースタイムは休憩込みで5時間35分（7.6km・のぼりくだり831m）。開聞駅との徒歩往復1時間20分が別にかかる。</li>
           <li>指宿枕崎線は本数が命。戻る便を朝に決め、下山開始の締切にする。</li>
-          <li>山頂は長居しない。924mでも下りは2時間20分。</li>
+          <li>924mでも下りは2時間25分。日入は17:24。</li>
           <li>荷物は指宿駅なので、指宿経由で戻る動線を外れないこと。</li>
         </ul>
       </div>
@@ -511,30 +574,36 @@ body::before{ /* iPhoneのノッチ／Dynamic Island下の帯 */
   <div class="tab-panel" id="day4">
     <div class="card day4" data-date="2026-12-31">
       <div class="card-head">
-        <span class="tag"><svg class="ic"><use href="#i-mtn"/></svg>12/31（木）</span>
+        <span class="tag only" aria-label="12/31（木）"><svg class="ic"><use href="#i-mtn"/></svg></span>
         <div class="card-title">韓国岳 登山 → 霧島で年越し</div>
       </div>
       <div class="mt">
         <div class="stats stats-3">
-          <div class="s"><div class="n">1,700<span class="u">m</span></div><div class="l">標高<br>百名山19座目</div></div>
-          <div class="s"><div class="n">3:20</div><div class="l">コースタイム<br>休憩40分</div></div>
-          <div class="s"><div class="n">500<span class="u">m</span></div><div class="l">標高差（約）<br>えびの高原から</div></div>
+          <div class="s"><div class="n">1,700<span class="u">m</span></div><div class="l">百名山19座目</div></div>
+          <div class="s"><div class="n">3:30</div><div class="l">休憩15分</div></div>
+          <div class="s"><div class="n">12</div><div class="l">ふつう</div></div>
         </div>
       </div>
       <div class="trail">
         <div class="tl" data-t="05:30"><div class="t-start">5:30</div><div class="t-dur">1:10</div><div class="t-ico"><svg class="ic"><use href="#i-sun"/></svg></div><div class="t-sum">起床・朝食・チェックアウト</div><div class="t-det">移動が長い。防寒を着込んで出る</div></div>
         <div class="tl" data-t="06:40"><div class="t-start">6:40</div><div class="t-dur">0:30</div><div class="t-ico"><svg class="ic"><use href="#i-train"/></svg></div><div class="t-sum">市電→鹿児島中央</div><div class="t-det">大晦日の朝。始発近くの便で</div></div>
+        <div class="sun" data-t="07:17"><div class="s-t">7:17</div><div class="s-d"></div><div>日の出</div></div>
         <div class="tl" data-t="07:30"><div class="t-start">7:30</div><div class="t-dur">0:50</div><div class="t-ico"><svg class="ic"><use href="#i-train"/></svg></div><div class="t-sum">特急→霧島神宮</div><div class="t-det">きりしま・<span class="hl">指定席を予約（12/1発売）</span>。日豊本線を北上</div></div>
         <div class="tl" data-t="08:35"><div class="t-start">8:35</div><div class="t-dur">1:15</div><div class="t-ico"><svg class="ic"><use href="#i-bus"/></svg></div><div class="t-sum">路線バス→えびの高原</div><div class="t-det"><span class="warn">本数が極端に少ない</span>。<span class="hl">冬季運行を前日までに確認</span>。運休時は丸尾からタクシー</div></div>
-        <div class="tl" data-t="09:50"><div class="t-start">9:50</div><div class="t-dur">0:20</div><div class="t-ico"><svg class="ic"><use href="#i-gear"/></svg></div><div class="t-sum">えびの高原 登山口</div><div class="t-det">約1,200m。<span class="hl">登山届を提出</span>。チェーンスパイクを装着してから歩き出す</div></div>
-        <div class="tl hike" data-t="10:10"><div class="t-start">10:10</div><div class="t-dur">1:30</div><div class="t-ico"><svg class="ic"><use href="#i-up"/></svg></div><div class="t-sum">えびの高原（登山開始）</div><div class="t-det">5合目から先は視界が開けて風が強い。霧氷が見られるのはこの区間</div></div>
-        <div class="tl hike" data-t="11:40"><div class="t-start">11:40</div><div class="t-dur">0:40</div><div class="t-ico"><svg class="ic"><use href="#i-summit"/></svg></div><div class="t-sum">韓国岳 山頂（1,700m）</div><div class="t-det">巨大な火口壁を見下ろす。反対側には大浪池と高千穂峰。昼食休憩</div></div>
-        <div class="tl hike" data-t="12:20"><div class="t-start">12:20</div><div class="t-dur">1:10</div><div class="t-ico"><svg class="ic"><use href="#i-down"/></svg></div><div class="t-sum">下山開始</div><div class="t-det">凍結した木段が滑る。スパイクは登山口まで外さない</div></div>
-        <div class="tl" data-t="13:30"><div class="t-start">13:30</div><div class="t-dur">0:40</div><div class="t-ico"><svg class="ic"><use href="#i-eye"/></svg></div><div class="t-sum">エコミュージアムセンター</div><div class="t-det">えびのエコミュージアムセンターと売店。山バッジと温かい飲み物。バスの時刻を再確認</div></div>
+        <div class="tl" data-t="09:50"><div class="t-start">9:50</div><div class="t-dur">0:25</div><div class="t-ico"><svg class="ic"><use href="#i-gear"/></svg></div><div class="t-sum"><a class="map" href="https://www.google.com/maps/search/?api=1&query=%E3%81%88%E3%81%B3%E3%81%AE%E9%AB%98%E5%8E%9F%20%E3%82%A8%E3%82%B3%E3%83%9F%E3%83%A5%E3%83%BC%E3%82%B8%E3%82%A2%E3%83%A0%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC" target="_blank" rel="noopener">えびの高原</a> 到着・準備</div><div class="t-det">約1,200m。<span class="hl">登山届を提出</span>。チェーンスパイクを装着してから歩き出す</div></div>
+        <div class="tl hike" data-t="10:15"><div class="t-start">10:15</div><div class="t-dur">0:40</div><div class="t-ico"><svg class="ic"><use href="#i-up"/></svg></div><div class="t-sum">韓国岳登山口（登山開始）</div></div>
+        <div class="tl hike" data-t="10:55"><div class="t-start">10:55</div><div class="t-dur">0:25</div><div class="t-ico"><svg class="ic"><use href="#i-up"/></svg></div><div class="t-sum">硫黄山火口展望所</div></div>
+        <div class="tl hike" data-t="11:20"><div class="t-start">11:20</div><div class="t-dur">0:40</div><div class="t-ico"><svg class="ic"><use href="#i-up"/></svg></div><div class="t-sum">五合目</div><div class="t-det">ここから視界が開けて風が強い。霧氷が見られる区間</div></div>
+        <div class="tl hike" data-t="12:00"><div class="t-start">12:00</div><div class="t-dur">0:15</div><div class="t-ico"><svg class="ic"><use href="#i-summit"/></svg></div><div class="t-sum"><a class="map" href="https://www.google.com/maps/search/?api=1&query=%E9%9F%93%E5%9B%BD%E5%B2%B3" target="_blank" rel="noopener">韓国岳 山頂</a>（1,700m）</div><div class="t-det">日本百名山 通算19座目。15分休憩・昼食。巨大な火口壁、大浪池と高千穂峰</div></div>
+        <div class="tl hike" data-t="12:15"><div class="t-start">12:15</div><div class="t-dur">0:35</div><div class="t-ico"><svg class="ic"><use href="#i-down"/></svg></div><div class="t-sum">下山開始</div><div class="t-det"><span class="warn">凍結した木段が滑る</span>。スパイクは登山口まで外さない</div></div>
+        <div class="tl hike" data-t="12:50"><div class="t-start">12:50</div><div class="t-dur">0:20</div><div class="t-ico"><svg class="ic"><use href="#i-down"/></svg></div><div class="t-sum">五合目</div></div>
+        <div class="tl hike" data-t="13:10"><div class="t-start">13:10</div><div class="t-dur">0:35</div><div class="t-ico"><svg class="ic"><use href="#i-down"/></svg></div><div class="t-sum">硫黄山火口展望所</div></div>
+        <div class="tl hike" data-t="13:45"><div class="t-start">13:45</div><div class="t-dur">0:25</div><div class="t-ico"><svg class="ic"><use href="#i-down"/></svg></div><div class="t-sum">韓国岳登山口（下山完了）</div><div class="t-det">エコミュージアムセンターで山バッジと温かい飲み物。バスの時刻を再確認</div></div>
         <div class="tl" data-t="14:10"><div class="t-start">14:10</div><div class="t-dur">0:40</div><div class="t-ico"><svg class="ic"><use href="#i-bus"/></svg></div><div class="t-sum">路線バス→丸尾</div><div class="t-det">霧島連山の中腹を下る</div></div>
-        <div class="tl" data-t="14:50"><div class="t-start">14:50</div><div class="t-dur">1:10</div><div class="t-ico"><svg class="ic"><use href="#i-shop"/></svg></div><div class="t-sum">霧島温泉市場</div><div class="t-det">温泉蒸しプリン、温泉たまご、足湯</div></div>
+        <div class="tl" data-t="14:50"><div class="t-start">14:50</div><div class="t-dur">1:10</div><div class="t-ico"><svg class="ic"><use href="#i-shop"/></svg></div><div class="t-sum"><a class="map" href="https://www.google.com/maps/search/?api=1&query=%E9%9C%A7%E5%B3%B6%E6%B8%A9%E6%B3%89%E5%B8%82%E5%A0%B4" target="_blank" rel="noopener">霧島温泉市場</a></div><div class="t-det">温泉蒸しプリン、温泉たまご、足湯</div></div>
         <div class="tl" data-t="16:00"><div class="t-start">16:00</div><div class="t-dur">0:50</div><div class="t-ico"><svg class="ic"><use href="#i-bus"/></svg></div><div class="t-sum">路線バス→国分駅</div><div class="t-det">大晦日の減便に注意。<span class="hl">最終便の時刻を確認</span></div></div>
-        <div class="tl stay" data-t="16:55"><div class="t-start">16:55</div><div class="t-dur">0:35</div><div class="t-ico"><svg class="ic"><use href="#i-lodge"/></svg></div><div class="t-sum">国分 チェックイン</div><div class="t-det">スーパーホテル霧島天然温泉。これで登山は2座終了。装備を乾かす</div></div>
+        <div class="tl stay" data-t="16:55"><div class="t-start">16:55</div><div class="t-dur">0:35</div><div class="t-ico"><svg class="ic"><use href="#i-lodge"/></svg></div><div class="t-sum"><a class="map" href="https://www.google.com/maps/search/?api=1&query=%E3%82%B9%E3%83%BC%E3%83%91%E3%83%BC%E3%83%9B%E3%83%86%E3%83%AB%E9%9C%A7%E5%B3%B6%E5%A4%A9%E7%84%B6%E6%B8%A9%E6%B3%89" target="_blank" rel="noopener">国分</a> チェックイン</div><div class="t-det">スーパーホテル霧島天然温泉。これで登山は2座終了。装備を乾かす</div></div>
+        <div class="sun set" data-t="17:23"><div class="s-t">17:23</div><div class="s-d"></div><div>日の入</div></div>
         <div class="tl" data-t="17:30"><div class="t-start">17:30</div><div class="t-dur">1:00</div><div class="t-ico"><svg class="ic"><use href="#i-bath"/></svg></div><div class="t-sum">大浴場・コインランドリー</div><div class="t-det">登山着はここで洗っておく。明日は初詣</div></div>
         <div class="tl" data-t="18:30"><div class="t-start">18:30</div><div class="t-dur">1:30</div><div class="t-ico"><svg class="ic"><use href="#i-fork"/></svg></div><div class="t-sum">年越しの夕食</div><div class="t-det"><span class="warn">大晦日は休業する店が多い</span>。<span class="hl">国分駅周辺の営業店を確認</span></div></div>
         <div class="tl" data-t="20:00"><div class="t-start">20:00</div><div class="t-dur">2:00</div><div class="t-ico"><svg class="ic"><use href="#i-clock"/></svg></div><div class="t-sum">部屋でゆっくり年越し</div><div class="t-det">旅の折り返し。写真を整理する時間に</div></div>
@@ -544,7 +613,7 @@ body::before{ /* iPhoneのノッチ／Dynamic Island下の帯 */
         <div class="note-h">この日のポイント</div>
         <ul>
           <li>今日の成否はバス。えびの高原行きを前日夜に確認する。運休なら丸尾からタクシー。</li>
-          <li>韓国岳は登り1:30と短いが山頂は強風。防寒具はすぐ出せる場所に。</li>
+          <li>コースタイムは休憩込みで3時間30分（4.8km・のぼりくだり536m）。山頂は強風、防寒具はすぐ出せる場所に。</li>
           <li>登り自体は3座で最も楽。体力よりバスの時間勝負の日。</li>
           <li>大晦日は飲食店の営業が読めない。念のため駅かコンビニで調達しておく。</li>
         </ul>
@@ -556,24 +625,26 @@ body::before{ /* iPhoneのノッチ／Dynamic Island下の帯 */
   <div class="tab-panel" id="day5">
     <div class="card day5" data-date="2027-01-01">
       <div class="card-head">
-        <span class="tag"><svg class="ic"><use href="#i-torii"/></svg>1/1（金）</span>
+        <span class="tag only" aria-label="1/1（金）"><svg class="ic"><use href="#i-torii"/></svg></span>
         <div class="card-title">霧島神宮 初詣 → 熊本城</div>
       </div>
       <div class="trail">
         <div class="tl" data-t="07:00"><div class="t-start">7:00</div><div class="t-dur">1:15</div><div class="t-ico"><svg class="ic"><use href="#i-sun"/></svg></div><div class="t-sum">起床・朝食・チェックアウト</div><div class="t-det">あけましておめでとうございます</div></div>
+        <div class="sun" data-t="07:16"><div class="s-t">7:16</div><div class="s-d"></div><div>日の出</div></div>
         <div class="tl" data-t="08:15"><div class="t-start">8:15</div><div class="t-dur">0:25</div><div class="t-ico"><svg class="ic"><use href="#i-train"/></svg></div><div class="t-sum">日豊本線→霧島神宮</div><div class="t-det">普通。元旦は初詣客で混雑。荷物は最小限に</div></div>
         <div class="tl" data-t="08:40"><div class="t-start">8:40</div><div class="t-dur">0:15</div><div class="t-ico"><svg class="ic"><use href="#i-taxi"/></svg></div><div class="t-sum">タクシー→霧島神宮</div><div class="t-det"><span class="warn">元旦は臨時ダイヤと渋滞</span>。<span class="hl">往復で予約</span></div></div>
-        <div class="tl" data-t="08:55"><div class="t-start">8:55</div><div class="t-dur">1:15</div><div class="t-ico"><svg class="ic"><use href="#i-torii"/></svg></div><div class="t-sum">霧島神宮 初詣</div><div class="t-det">天孫降臨の神話が伝わる南九州随一の古社</div></div>
+        <div class="tl" data-t="08:55"><div class="t-start">8:55</div><div class="t-dur">1:15</div><div class="t-ico"><svg class="ic"><use href="#i-torii"/></svg></div><div class="t-sum"><a class="map" href="https://www.google.com/maps/search/?api=1&query=%E9%9C%A7%E5%B3%B6%E7%A5%9E%E5%AE%AE" target="_blank" rel="noopener">霧島神宮</a> 初詣</div><div class="t-det">天孫降臨の神話が伝わる南九州随一の古社</div></div>
         <div class="tl" data-t="10:10"><div class="t-start">10:10</div><div class="t-dur">0:20</div><div class="t-ico"><svg class="ic"><use href="#i-taxi"/></svg></div><div class="t-sum">タクシー→霧島神宮駅</div><div class="t-det">行きの運転手に迎えの時間を伝えておく</div></div>
         <div class="tl" data-t="10:45"><div class="t-start">10:45</div><div class="t-dur">0:55</div><div class="t-ico"><svg class="ic"><use href="#i-train"/></svg></div><div class="t-sum">特急→鹿児島中央</div><div class="t-det">きりしま・<span class="hl">指定席を予約（12/2発売）</span></div></div>
         <div class="tl" data-t="11:40"><div class="t-start">11:40</div><div class="t-dur">0:20</div><div class="t-ico"><svg class="ic"><use href="#i-swap"/></svg></div><div class="t-sum">鹿児島中央 乗換</div><div class="t-det">新幹線ホームへ。駅弁はここで</div></div>
         <div class="tl" data-t="12:00"><div class="t-start">12:00</div><div class="t-dur">0:45</div><div class="t-ico"><svg class="ic"><use href="#i-bullet"/></svg></div><div class="t-sum">新幹線→熊本</div><div class="t-det">九州新幹線・<span class="hl">指定席を予約（12/2発売）</span>。わずか45分</div></div>
         <div class="tl" data-t="12:45"><div class="t-start">12:45</div><div class="t-dur">0:20</div><div class="t-ico"><svg class="ic"><use href="#i-train"/></svg></div><div class="t-sum">市電→辛島町</div></div>
         <div class="tl" data-t="13:05"><div class="t-start">13:05</div><div class="t-dur">0:25</div><div class="t-ico"><svg class="ic"><use href="#i-bag"/></svg></div><div class="t-sum">ホテルに荷物を預ける</div><div class="t-det">チェックインは夕方。身軽になって城へ</div></div>
-        <div class="tl" data-t="13:30"><div class="t-start">13:30</div><div class="t-dur">1:00</div><div class="t-ico"><svg class="ic"><use href="#i-fork"/></svg></div><div class="t-sum">城彩苑で食べ歩きランチ</div><div class="t-det">桜の馬場 城彩苑。あか牛串、馬刺し握り、いきなり団子。<span class="hl">元旦の営業時間を確認</span></div></div>
-        <div class="tl" data-t="14:30"><div class="t-start">14:30</div><div class="t-dur">1:30</div><div class="t-ico"><svg class="ic"><use href="#i-castle"/></svg></div><div class="t-sum">熊本城 見学</div><div class="t-det">天守閣の体験展示と特別見学通路の石垣</div></div>
+        <div class="tl" data-t="13:30"><div class="t-start">13:30</div><div class="t-dur">1:00</div><div class="t-ico"><svg class="ic"><use href="#i-fork"/></svg></div><div class="t-sum"><a class="map" href="https://www.google.com/maps/search/?api=1&query=%E6%A1%9C%E3%81%AE%E9%A6%AC%E5%A0%B4%20%E5%9F%8E%E5%BD%A9%E8%8B%91" target="_blank" rel="noopener">城彩苑</a>で食べ歩きランチ</div><div class="t-det">桜の馬場 城彩苑。あか牛串、馬刺し握り、いきなり団子。<span class="hl">元旦の営業時間を確認</span></div></div>
+        <div class="tl" data-t="14:30"><div class="t-start">14:30</div><div class="t-dur">1:30</div><div class="t-ico"><svg class="ic"><use href="#i-castle"/></svg></div><div class="t-sum"><a class="map" href="https://www.google.com/maps/search/?api=1&query=%E7%86%8A%E6%9C%AC%E5%9F%8E" target="_blank" rel="noopener">熊本城</a> 見学</div><div class="t-det">天守閣の体験展示と特別見学通路の石垣</div></div>
         <div class="tl" data-t="16:00"><div class="t-start">16:00</div><div class="t-dur">1:30</div><div class="t-ico"><svg class="ic"><use href="#i-shop"/></svg></div><div class="t-sum">上通・下通アーケード街</div><div class="t-det">鶴屋百貨店、アルペンアウトドアーズ、タイトーステーション</div></div>
-        <div class="tl stay" data-t="17:30"><div class="t-start">17:30</div><div class="t-dur">1:00</div><div class="t-ico"><svg class="ic"><use href="#i-lodge"/></svg></div><div class="t-sum">チェックイン・スカイスパ</div><div class="t-det">カンデオホテルズ熊本新市街。最上階のスカイスパで明日の阿蘇にそなえて休む</div></div>
+        <div class="sun set" data-t="17:21"><div class="s-t">17:21</div><div class="s-d"></div><div>日の入</div></div>
+        <div class="tl stay" data-t="17:30"><div class="t-start">17:30</div><div class="t-dur">1:00</div><div class="t-ico"><svg class="ic"><use href="#i-lodge"/></svg></div><div class="t-sum"><a class="map" href="https://www.google.com/maps/search/?api=1&query=%E3%82%AB%E3%83%B3%E3%83%87%E3%82%AA%E3%83%9B%E3%83%86%E3%83%AB%E3%82%BA%E7%86%8A%E6%9C%AC%E6%96%B0%E5%B8%82%E8%A1%97" target="_blank" rel="noopener">チェックイン</a>・スカイスパ</div><div class="t-det">カンデオホテルズ熊本新市街。最上階のスカイスパで明日の阿蘇にそなえて休む</div></div>
         <div class="tl" data-t="18:30"><div class="t-start">18:30</div><div class="t-dur">1:30</div><div class="t-ico"><svg class="ic"><use href="#i-fork"/></svg></div><div class="t-sum">熊本市街で夕食</div><div class="t-det">馬刺し、熊本ラーメン。<span class="warn">三が日は休業が多い</span>。<span class="hl">店を予約</span></div></div>
         <div class="tl" data-t="20:00"><div class="t-start">20:00</div><div class="t-dur">1:00</div><div class="t-ico"><svg class="ic"><use href="#i-gear"/></svg></div><div class="t-sum">コインランドリー・登山準備</div><div class="t-det"><span class="hl">阿蘇の火口規制と天気を確認</span>。規制ならルート変更</div></div>
         <div class="tl stay" data-t="22:00"><div class="t-start">22:00</div><div class="t-dur">8:00</div><div class="t-ico"><svg class="ic"><use href="#i-moon"/></svg></div><div class="t-sum">就寝</div><div class="t-det">翌朝6:00起床。最後の1座</div></div>
@@ -593,30 +664,40 @@ body::before{ /* iPhoneのノッチ／Dynamic Island下の帯 */
   <div class="tab-panel" id="day6">
     <div class="card day6" data-date="2027-01-02">
       <div class="card-head">
-        <span class="tag"><svg class="ic"><use href="#i-mtn"/></svg>1/2（土）</span>
+        <span class="tag only" aria-label="1/2（土）"><svg class="ic"><use href="#i-mtn"/></svg></span>
         <div class="card-title">阿蘇山（中岳・高岳）日帰り登山</div>
       </div>
       <div class="mt">
         <div class="stats stats-3">
-          <div class="s"><div class="n">1,592<span class="u">m</span></div><div class="l">標高（高岳）<br>百名山20座目</div></div>
-          <div class="s"><div class="n">5:00</div><div class="l">コースタイム<br>休憩60分</div></div>
-          <div class="s"><div class="n">450<span class="u">m</span></div><div class="l">標高差（約）<br>山上ターミナルから</div></div>
+          <div class="s"><div class="n">1,592<span class="u">m</span></div><div class="l">百名山20座目</div></div>
+          <div class="s"><div class="n">5:16</div><div class="l">休憩15分</div></div>
+          <div class="s"><div class="n">18</div><div class="l">ふつう</div></div>
         </div>
       </div>
       <div class="trail">
         <div class="tl" data-t="06:00"><div class="t-start">6:00</div><div class="t-dur">1:00</div><div class="t-ico"><svg class="ic"><use href="#i-sun"/></svg></div><div class="t-sum">起床・朝食</div><div class="t-det">出発前に<span class="hl">噴火警戒レベルを再確認</span></div></div>
         <div class="tl" data-t="07:00"><div class="t-start">7:00</div><div class="t-dur">0:30</div><div class="t-ico"><svg class="ic"><use href="#i-train"/></svg></div><div class="t-sum">市電→熊本駅前</div><div class="t-det">荷物はホテルに置いたまま、登山装備だけで</div></div>
+        <div class="sun" data-t="07:19"><div class="s-t">7:19</div><div class="s-d"></div><div>日の出</div></div>
         <div class="tl" data-t="07:30"><div class="t-start">7:30</div><div class="t-dur">1:10</div><div class="t-ico"><svg class="ic"><use href="#i-train"/></svg></div><div class="t-sum">特急→阿蘇</div><div class="t-det">九州横断特急／あそぼーい！・全席指定。<span class="hl">発売直後に予約（12/2発売）</span></div></div>
         <div class="tl" data-t="09:00"><div class="t-start">9:00</div><div class="t-dur">0:35</div><div class="t-ico"><svg class="ic"><use href="#i-bus"/></svg></div><div class="t-sum">阿蘇火口線→阿蘇山上</div><div class="t-det">産交バス・1日数本。<span class="hl">年末年始ダイヤと最終便を確認</span></div></div>
         <div class="tl" data-t="09:35"><div class="t-start">9:35</div><div class="t-dur">0:25</div><div class="t-ico"><svg class="ic"><use href="#i-warn"/></svg></div><div class="t-sum">規制状況の最終確認</div><div class="t-det">現地の掲示が最優先。<span class="hl">規制なら杵島岳・烏帽子岳に変更</span></div></div>
-        <div class="tl hike" data-t="10:00"><div class="t-start">10:00</div><div class="t-dur">2:00</div><div class="t-ico"><svg class="ic"><use href="#i-up"/></svg></div><div class="t-sum">阿蘇山上（登山開始）</div><div class="t-det"><span class="hl">登山届を提出</span>。砂千里ヶ浜を抜けて火口壁へ</div></div>
-        <div class="tl hike" data-t="12:00"><div class="t-start">12:00</div><div class="t-dur">0:30</div><div class="t-ico"><svg class="ic"><use href="#i-up"/></svg></div><div class="t-sum">中岳 火口展望（1,506m）</div><div class="t-det">噴煙を上げる火口を間近に。<span class="warn">火山ガスに注意</span>、風下に長居しない</div></div>
-        <div class="tl hike" data-t="12:30"><div class="t-start">12:30</div><div class="t-dur">0:30</div><div class="t-ico"><svg class="ic"><use href="#i-summit"/></svg></div><div class="t-sum">高岳 山頂（1,592m）</div><div class="t-det">九州本土最高峰。阿蘇カルデラと外輪山の大パノラマ</div></div>
-        <div class="tl hike" data-t="13:00"><div class="t-start">13:00</div><div class="t-dur">2:00</div><div class="t-ico"><svg class="ic"><use href="#i-down"/></svg></div><div class="t-sum">下山開始</div><div class="t-det">ガスが出ると目印を見失いやすい。ペイントを追う</div></div>
-        <div class="tl" data-t="15:00"><div class="t-start">15:00</div><div class="t-dur">0:30</div><div class="t-ico"><svg class="ic"><use href="#i-camera"/></svg></div><div class="t-sum">阿蘇山上で休憩・山バッジ</div><div class="t-det">3座目の記念。余裕があれば草千里ヶ浜へ</div></div>
-        <div class="tl" data-t="15:30"><div class="t-start">15:30</div><div class="t-dur">0:35</div><div class="t-ico"><svg class="ic"><use href="#i-bus"/></svg></div><div class="t-sum">阿蘇火口線→阿蘇駅</div><div class="t-det"><span class="warn">この便を逃すと足がない</span>。15:15にはバス停へ</div></div>
-        <div class="tl" data-t="16:05"><div class="t-start">16:05</div><div class="t-dur">0:25</div><div class="t-ico"><svg class="ic"><use href="#i-gift"/></svg></div><div class="t-sum">阿蘇駅・道の駅阿蘇</div><div class="t-det">阿蘇のお土産はここが充実</div></div>
+        <div class="tl hike" data-t="10:00"><div class="t-start">10:00</div><div class="t-dur">0:26</div><div class="t-ico"><svg class="ic"><use href="#i-up"/></svg></div><div class="t-sum"><a class="map" href="https://www.google.com/maps/search/?api=1&query=%E9%98%BF%E8%98%87%E5%B1%B1%20%E5%8F%A4%E5%9D%8A%E4%B8%AD" target="_blank" rel="noopener">古坊中登山口</a>（登山開始）</div><div class="t-det"><span class="hl">登山届を提出</span>。皿山分岐を経て砂千里へ</div></div>
+        <div class="tl hike" data-t="10:26"><div class="t-start">10:26</div><div class="t-dur">0:16</div><div class="t-ico"><svg class="ic"><use href="#i-up"/></svg></div><div class="t-sum">砂千里登山口</div></div>
+        <div class="tl hike" data-t="10:42"><div class="t-start">10:42</div><div class="t-dur">0:45</div><div class="t-ico"><svg class="ic"><use href="#i-up"/></svg></div><div class="t-sum">砂千里ヶ浜分岐</div><div class="t-det">月面のような砂礫の平原を抜けて火口壁へ</div></div>
+        <div class="tl hike" data-t="11:27"><div class="t-start">11:27</div><div class="t-dur">0:22</div><div class="t-ico"><svg class="ic"><use href="#i-up"/></svg></div><div class="t-sum">標高1392m地点</div></div>
+        <div class="tl hike" data-t="11:49"><div class="t-start">11:49</div><div class="t-dur">0:27</div><div class="t-ico"><svg class="ic"><use href="#i-up"/></svg></div><div class="t-sum">南岳</div></div>
+        <div class="tl hike" data-t="12:16"><div class="t-start">12:16</div><div class="t-dur">0:25</div><div class="t-ico"><svg class="ic"><use href="#i-up"/></svg></div><div class="t-sum">中岳（1,506m）</div><div class="t-det">噴煙を上げる火口を間近に。<span class="warn">火山ガスに注意</span>、風下に長居しない</div></div>
+        <div class="tl hike" data-t="12:41"><div class="t-start">12:41</div><div class="t-dur">0:15</div><div class="t-ico"><svg class="ic"><use href="#i-summit"/></svg></div><div class="t-sum"><a class="map" href="https://www.google.com/maps/search/?api=1&query=%E9%98%BF%E8%98%87%20%E9%AB%98%E5%B2%B3" target="_blank" rel="noopener">高岳 山頂</a>（1,592m）</div><div class="t-det">日本百名山 通算20座目。15分休憩・昼食。九州本土最高峰、阿蘇カルデラの大パノラマ</div></div>
+        <div class="tl hike" data-t="12:56"><div class="t-start">12:56</div><div class="t-dur">0:23</div><div class="t-ico"><svg class="ic"><use href="#i-down"/></svg></div><div class="t-sum">下山開始</div><div class="t-det">中岳へ戻り往路を下る。ガスが出ると目印を見失いやすい</div></div>
+        <div class="tl hike" data-t="13:19"><div class="t-start">13:19</div><div class="t-dur">0:40</div><div class="t-ico"><svg class="ic"><use href="#i-down"/></svg></div><div class="t-sum">中岳</div></div>
+        <div class="tl hike" data-t="13:59"><div class="t-start">13:59</div><div class="t-dur">0:35</div><div class="t-ico"><svg class="ic"><use href="#i-down"/></svg></div><div class="t-sum">標高1392m地点</div></div>
+        <div class="tl hike" data-t="14:34"><div class="t-start">14:34</div><div class="t-dur">0:16</div><div class="t-ico"><svg class="ic"><use href="#i-down"/></svg></div><div class="t-sum">砂千里ヶ浜分岐</div></div>
+        <div class="tl hike" data-t="14:50"><div class="t-start">14:50</div><div class="t-dur">0:26</div><div class="t-ico"><svg class="ic"><use href="#i-down"/></svg></div><div class="t-sum">砂千里登山口</div></div>
+        <div class="tl hike" data-t="15:16"><div class="t-start">15:16</div><div class="t-dur">0:14</div><div class="t-ico"><svg class="ic"><use href="#i-down"/></svg></div><div class="t-sum">古坊中登山口（下山完了）</div><div class="t-det">山バッジを購入。<span class="warn">15:30のバスまで14分</span></div></div>
+        <div class="tl" data-t="15:30"><div class="t-start">15:30</div><div class="t-dur">0:35</div><div class="t-ico"><svg class="ic"><use href="#i-bus"/></svg></div><div class="t-sum">阿蘇火口線→阿蘇駅</div><div class="t-det"><span class="warn">この便を逃すと足がない</span></div></div>
+        <div class="tl" data-t="16:05"><div class="t-start">16:05</div><div class="t-dur">0:25</div><div class="t-ico"><svg class="ic"><use href="#i-gift"/></svg></div><div class="t-sum">阿蘇駅・<a class="map" href="https://www.google.com/maps/search/?api=1&query=%E9%81%93%E3%81%AE%E9%A7%85%E9%98%BF%E8%98%87" target="_blank" rel="noopener">道の駅阿蘇</a></div><div class="t-det">阿蘇のお土産はここが充実</div></div>
         <div class="tl" data-t="16:30"><div class="t-start">16:30</div><div class="t-dur">1:10</div><div class="t-ico"><svg class="ic"><use href="#i-train"/></svg></div><div class="t-sum">特急→熊本</div><div class="t-det">豊肥本線・<span class="hl">指定席を予約（12/2発売）</span>。日没17:15、外輪山に沈む夕日</div></div>
+        <div class="sun set" data-t="17:20"><div class="s-t">17:20</div><div class="s-d"></div><div>日の入</div></div>
         <div class="tl" data-t="17:45"><div class="t-start">17:45</div><div class="t-dur">0:30</div><div class="t-ico"><svg class="ic"><use href="#i-train"/></svg></div><div class="t-sum">市電→辛島町</div><div class="t-det">ホテルへ戻り着替える</div></div>
         <div class="tl" data-t="18:30"><div class="t-start">18:30</div><div class="t-dur">1:30</div><div class="t-ico"><svg class="ic"><use href="#i-fork"/></svg></div><div class="t-sum">熊本市街で夕食</div><div class="t-det">3座完登のお祝い。馬刺し、熊本ラーメン</div></div>
         <div class="tl" data-t="20:00"><div class="t-start">20:00</div><div class="t-dur">1:00</div><div class="t-ico"><svg class="ic"><use href="#i-bath"/></svg></div><div class="t-sum">スカイスパ・コインランドリー</div><div class="t-det">登山装備はこれで終わり。明日は街の格好で動ける</div></div>
@@ -626,7 +707,7 @@ body::before{ /* iPhoneのノッチ／Dynamic Island下の帯 */
         <div class="note-h">この日のポイント</div>
         <ul>
           <li>山が開いているかは最後までわからない。規制時の代替（杵島岳・烏帽子岳、仙酔峡ルート）を想定して出発する。</li>
-          <li>バスは1日数本。15:30発に間に合わないと帰れない。実質の下山締切。</li>
+          <li>コースタイムは休憩込みで5時間16分（9.2km・のぼりくだり609m）。下山完了15:16、15:30のバスまで14分しかない。高岳を13:00までに出る。</li>
           <li>火口周辺は火山ガス。異変があれば無理せず引き返す。</li>
           <li>冬の阿蘇は凍結と強風。チェーンスパイクと防風着は必携。</li>
         </ul>
@@ -638,20 +719,22 @@ body::before{ /* iPhoneのノッチ／Dynamic Island下の帯 */
   <div class="tab-panel" id="day7">
     <div class="card day7" data-date="2027-01-03">
       <div class="card-head">
-        <span class="tag"><svg class="ic"><use href="#i-plane"/></svg>1/3（日）</span>
+        <span class="tag only" aria-label="1/3（日）"><svg class="ic"><use href="#i-plane"/></svg></span>
         <div class="card-title">博多でお土産 → 帰路</div>
       </div>
       <div class="trail">
         <div class="tl" data-t="07:00"><div class="t-start">7:00</div><div class="t-dur">1:30</div><div class="t-ico"><svg class="ic"><use href="#i-sun"/></svg></div><div class="t-sum">起床・朝食・荷造り</div><div class="t-det">お土産のスペースを空けておく</div></div>
+        <div class="sun" data-t="07:20"><div class="s-t">7:20</div><div class="s-d"></div><div>日の出</div></div>
         <div class="tl" data-t="08:30"><div class="t-start">8:30</div><div class="t-dur">0:30</div><div class="t-ico"><svg class="ic"><use href="#i-train"/></svg></div><div class="t-sum">市電→熊本駅前</div><div class="t-det">チェックアウトして熊本駅へ</div></div>
         <div class="tl" data-t="09:00"><div class="t-start">9:00</div><div class="t-dur">0:40</div><div class="t-ico"><svg class="ic"><use href="#i-bullet"/></svg></div><div class="t-sum">新幹線→博多</div><div class="t-det">九州新幹線・<span class="hl">指定席を予約（12/3発売）</span>。わずか35分</div></div>
         <div class="tl" data-t="09:50"><div class="t-start">9:50</div><div class="t-dur">0:20</div><div class="t-ico"><svg class="ic"><use href="#i-bag"/></svg></div><div class="t-sum">博多駅 荷物を預ける</div><div class="t-det">ロッカーは博多口・筑紫口の両側にある</div></div>
-        <div class="tl" data-t="10:10"><div class="t-start">10:10</div><div class="t-dur">1:50</div><div class="t-ico"><svg class="ic"><use href="#i-shop"/></svg></div><div class="t-sum">アミュプラザ博多</div><div class="t-det">JR博多シティ。限定トートバッグ、いっぴん通りのスイーツ</div></div>
+        <div class="tl" data-t="10:10"><div class="t-start">10:10</div><div class="t-dur">1:50</div><div class="t-ico"><svg class="ic"><use href="#i-shop"/></svg></div><div class="t-sum"><a class="map" href="https://www.google.com/maps/search/?api=1&query=%E3%82%A2%E3%83%9F%E3%83%A5%E3%83%97%E3%83%A9%E3%82%B6%E5%8D%9A%E5%A4%9A" target="_blank" rel="noopener">アミュプラザ博多</a></div><div class="t-det">JR博多シティ。限定トートバッグ、いっぴん通りのスイーツ</div></div>
         <div class="tl" data-t="12:00"><div class="t-start">12:00</div><div class="t-dur">1:00</div><div class="t-ico"><svg class="ic"><use href="#i-fork"/></svg></div><div class="t-sum">博多で最後の昼食</div><div class="t-det">豚骨ラーメン、もつ鍋。「博多めん街道」は並びが分散</div></div>
-        <div class="tl" data-t="13:00"><div class="t-start">13:00</div><div class="t-dur">0:50</div><div class="t-ico"><svg class="ic"><use href="#i-gift"/></svg></div><div class="t-sum">マイング・お土産の仕上げ</div><div class="t-det">明太子と銘菓をまとめて。荷物を受け取る</div></div>
+        <div class="tl" data-t="13:00"><div class="t-start">13:00</div><div class="t-dur">0:50</div><div class="t-ico"><svg class="ic"><use href="#i-gift"/></svg></div><div class="t-sum"><a class="map" href="https://www.google.com/maps/search/?api=1&query=%E3%83%9E%E3%82%A4%E3%83%B3%E3%82%B0%20%E5%8D%9A%E5%A4%9A%E9%A7%85" target="_blank" rel="noopener">マイング</a>・お土産の仕上げ</div><div class="t-det">明太子と銘菓をまとめて。荷物を受け取る</div></div>
         <div class="tl" data-t="13:50"><div class="t-start">13:50</div><div class="t-dur">0:10</div><div class="t-ico"><svg class="ic"><use href="#i-train"/></svg></div><div class="t-sum">地下鉄→福岡空港</div><div class="t-det">空港線で5分</div></div>
         <div class="tl" data-t="14:10"><div class="t-start">14:10</div><div class="t-dur">1:45</div><div class="t-ico"><svg class="ic"><use href="#i-airport"/></svg></div><div class="t-sum">福岡空港 保安検査</div><div class="t-det"><span class="warn">Uターンで混雑・早めに</span>。展望デッキで時間調整</div></div>
         <div class="tl" data-t="15:55"><div class="t-start">15:55</div><div class="t-dur">1:40</div><div class="t-ico"><svg class="ic"><use href="#i-plane"/></svg></div><div class="t-sum">FDA505便→新潟</div><div class="t-det">福岡空港→新潟空港</div></div>
+        <div class="sun set" data-t="16:36"><div class="s-t">16:36</div><div class="s-d"></div><div>日の入</div></div>
         <div class="tl stay" data-t="17:35"><div class="t-start">17:35</div><div class="t-dur">—</div><div class="t-ico"><svg class="ic"><use href="#i-home"/></svg></div><div class="t-sum">新潟空港 到着</div><div class="t-det">おつかれさまでした。百名山3座、無事に登頂</div></div>
       </div>
       <div class="note">
@@ -704,10 +787,40 @@ body::before{ /* iPhoneのノッチ／Dynamic Island下の帯 */
     item.addEventListener('click', function(){
       var on = item.classList.toggle('checked');
       if (on) state[key] = 1; else delete state[key];
-      save(); refreshCounters();
+      if (on){ item.classList.add('just'); setTimeout(function(){ item.classList.remove('just'); refreshFold(); }, 450); }
+      save(); refreshCounters(); refreshFold();
     });
   });
   refreshCounters();
+
+  /* ── チェック済みを折りたたむ（端末に保存） ── */
+  var hideDone = false;
+  try{ hideDone = localStorage.getItem(NS+'hideDone') === '1'; }catch(e){}
+  function refreshFold(){
+    [].slice.call(document.querySelectorAll('.fold')).forEach(function(b){
+      var card = b.closest('.card');
+      var items = [].slice.call(card.querySelectorAll('.item'));
+      var done = items.filter(function(i){ return i.classList.contains('checked'); }).length;
+      card.classList.toggle('hide-done', hideDone);
+      card.classList.toggle('complete', done === items.length);
+      b.setAttribute('aria-pressed', hideDone ? 'true' : 'false');
+      b.textContent = hideDone ? '済みを表示' + (done ? '（' + done + '）' : '') : '済みを隠す';
+      /* 全部済んだ分類は見出しごと隠す */
+      [].slice.call(card.querySelectorAll('.cat')).forEach(function(c){
+        var all = true, n = c.nextElementSibling;
+        while (n && n.classList.contains('item')){ if (!n.classList.contains('checked') || n.classList.contains('just')) all = false; n = n.nextElementSibling; }
+        c.classList.toggle('done', all);
+      });
+    });
+  }
+  [].slice.call(document.querySelectorAll('.fold')).forEach(function(b){
+    b.addEventListener('click', function(){
+      hideDone = !hideDone;
+      try{ localStorage.setItem(NS+'hideDone', hideDone ? '1' : '0'); }catch(e){}
+      refreshFold();
+    });
+  });
+  refreshFold();
 
   /* ── 出発までのカウントダウン ── */
   var DAYS = ['2026-12-28','2026-12-29','2026-12-30','2026-12-31','2027-01-01','2027-01-02','2027-01-03'];
@@ -719,28 +832,45 @@ body::before{ /* iPhoneのノッチ／Dynamic Island下の帯 */
   if (el){
     var idx = DAYS.indexOf(todayKey());
     if (idx >= 0){
-      el.textContent = '旅の ' + (idx+1) + ' 日目';
+      el.innerHTML = '旅の<b>' + (idx+1) + '</b>日目';
     } else {
       var diff = Math.ceil((new Date('2026-12-28T00:00:00') - new Date()) / 86400000);
-      el.textContent = diff > 0 ? '出発まで あと ' + diff + ' 日' : '';
+      el.innerHTML = diff > 0 ? '出発まで あと<b>' + diff + '</b>日' : '';
     }
   }
 
   /* ── 当日は「今ここ」を自動表示 ── */
+  function toMin(r){ var p = r.getAttribute('data-t').split(':'); return (+p[0])*60 + (+p[1]); }
   function markNow(){
     [].slice.call(document.querySelectorAll('.tl.now')).forEach(function(r){ r.classList.remove('now'); });
+    [].slice.call(document.querySelectorAll('.past')).forEach(function(r){ r.classList.remove('past'); });
     var key = todayKey(), i = DAYS.indexOf(key);
-    if (i < 0) return;
-    var card = document.querySelector('.card[data-date="' + key + '"]');
-    if (!card) return;
+    if (i < 0) return null;            /* 旅行前・旅行後は何もしない（全て元の濃さ） */
     var now  = new Date(), mins = now.getHours()*60 + now.getMinutes();
-    var rows = [].slice.call(card.querySelectorAll('.tl[data-t]'));
     var cur  = null;
-    rows.forEach(function(r){
-      var p = r.getAttribute('data-t').split(':');
-      if ((+p[0])*60 + (+p[1]) <= mins) cur = r;
+    [].slice.call(document.querySelectorAll('.card[data-date]')).forEach(function(card){
+      var d = card.getAttribute('data-date');
+      var rows = [].slice.call(card.querySelectorAll('[data-t]'));
+      if (d < key){ rows.forEach(function(r){ r.classList.add('past'); }); return; }
+      if (d > key) return;
+      var tl = rows.filter(function(r){ return r.classList.contains('tl'); });
+      tl.forEach(function(r){ if (toMin(r) <= mins) cur = r; });
+      if (cur) cur.classList.add('now');
+      var curMin = cur ? toMin(cur) : -1;
+      rows.forEach(function(r){
+        if (r === cur) return;
+        if (r.classList.contains('tl') ? toMin(r) < curMin : toMin(r) <= mins) r.classList.add('past');
+      });
     });
-    if (cur) cur.classList.add('now');
+    return cur;
+  }
+  /* 「今ここ」までスクロール（タブの下に収まるように） */
+  function scrollToNow(smooth){
+    var cur = document.querySelector('.tl.now');
+    if (!cur) return;
+    var tabs = document.querySelector('.tabs');
+    var y = cur.getBoundingClientRect().top + window.pageYOffset - (tabs ? tabs.offsetHeight : 0) - 70;
+    window.scrollTo({ top: Math.max(0, y), behavior: smooth ? 'smooth' : 'auto' });
   }
 
   /* ── 初期表示：旅行中はその日のタブ、それ以外は前回のタブ ── */
@@ -751,6 +881,13 @@ body::before{ /* iPhoneのノッチ／Dynamic Island下の帯 */
   if (openTab && document.getElementById(openTab)) activate(openTab, false);
 
   markNow();
+  if (di >= 0) requestAnimationFrame(function(){ scrollToNow(false); });
+  /* 旅行中に当日のタブを押したら「今ここ」へ */
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){
+      if (di >= 0 && b.getAttribute('data-tab') === 'day' + (di+1)) setTimeout(function(){ scrollToNow(true); }, 30);
+    });
+  });
   setInterval(markNow, 60000);
   document.addEventListener('visibilitychange', function(){ if (!document.hidden) markNow(); });
 })();
